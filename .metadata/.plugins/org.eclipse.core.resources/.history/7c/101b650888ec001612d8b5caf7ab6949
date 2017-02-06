@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class Game{
 	
-	boolean running;
+	protected static boolean running;
 	ArrayList<Player> playArray;
 	ArrayList<Monster> monArray;
 	ArrayList<JLabel> playerLbl;//all arrays will be used to convert to multiplayer
@@ -34,14 +34,14 @@ public class Game{
 	JProgressBar roccohp;
 	ArrayList<JProgressBar> monsterHpBars;
 	boolean firstTime; //is this the first time the game is being set up? used to make the loop not cearte 100 mobs when the player dies.
-	InputHandler input;
-	byte floor;//what floor are they on? 0=above ground floor 1-9 1 being dung 1 floor 1 9 being dung 3 floor 9
+	
+	static byte floor = 0;//what floor are they on? 0=above ground floor 1-9 1 being dung 1 floor 1 9 being dung 3 floor 9
 	
 	//menu**
 	
 	JMenu game;
 	JMenuItem save;
-	JMenuItem load;
+	JMenuItem load;//probably wont use cuz cheating
 	JMenuItem respawn;
 	JMenuItem exit;
 	
@@ -64,7 +64,7 @@ public class Game{
 	JMenuItem d3f3;
 	//end menu**
 	
-	public void initMobs(){
+	public void setupMobs(){
 		
 		running = true;
 		playArray = new ArrayList<Player>();
@@ -77,11 +77,11 @@ public class Game{
 		roccohp = makeHpBar(rocco);
 		monsterHpBars = new ArrayList<JProgressBar>();
 		firstTime = true; //is this the first time the game is being set up? used to make the loop not cearte 100 mobs when the player dies.
-		floor = 0;
+		
 		
 	}
 	
-	public void initMenu(){
+	public void setupMenu(){
 		
 		game = new JMenu("Game");
 		save = new JMenuItem("Save");
@@ -112,15 +112,12 @@ public class Game{
 	public Game(){
 		
 		//menu
-		this.initMenu();
+		this.setupMenu();
 		//menu
-		this.initMobs();
-		
-		input = new InputHandler(window);
 		
 	}
 	
-	public void setupFrame(){
+	public void setup(){
 		//Menu bar
 		
 		MenuBarListener menuListener = new MenuBarListener();
@@ -230,9 +227,17 @@ public class Game{
 			
 	}
 	
-	public void moveAndAnimate(){
-		
-		if(input != null){
+	public void run(){
+	
+	if(firstTime){
+		setup();
+		firstTime = false;
+	}
+	InputHandler input = new InputHandler(window);
+	
+		while(running) {
+			
+			if(input != null){
 			if(input.right.isPressed()){
 				rocco.moveRight();
 				rocco.setDirection("right");
@@ -352,14 +357,20 @@ public class Game{
 				
 			}
 		}
-		
-		rocco.setLastAttack(rocco.getLastAttack()+1);
-		
-	}
-	
-	public void monsterActions(){
-		
-		for (int i = 0; i < monArray.size(); i++) {
+			rocco.setLastAttack(rocco.getLastAttack()+1);
+			
+			for (int i = 0; i < monArray.size(); i++) {
+				
+			
+			//if(monArray.get(i).getYvel() < 0)
+			//	monsterLbl.get(i).setIcon(monArray.get(i).getImageDown());//*************************Demon Animation******************************
+			//else if(monArray.get(i).getYvel() > 0){}
+			//else if(monArray.get(i).getXvel() < 0){}
+			//else if(monArray.get(i).getXvel() > 0){}
+			//else {
+			//	monsterLbl.get(i).setIcon(new ImageIcon("src/sprites/DemonD1"));
+			//}
+			
 			
 			monsterLbl.get(i).setLocation((int)monArray.get(i).getXpos(), (int)monArray.get(i).getYpos());
 			playerLbl.get(0).setLocation((int)rocco.getXpos(),(int)rocco.getYpos());
@@ -386,24 +397,6 @@ public class Game{
 				running = false;
 			}
 			}//end for
-		
-	}
-	
-	public void run(){
-	
-	if(firstTime){
-		this.setupFrame();
-		firstTime = false;
-	}
-	
-	
-		while(running) {
-			
-			this.moveAndAnimate();
-			
-			
-			
-			this.monsterActions();
 			
 			playerLbl.get(0).setToolTipText("hp: " + rocco.getHitpoints() + " atk: " + rocco.getAttack() + " str: " + rocco.getStrength() + " def: " + rocco.getDefense());
 			monsterLbl.get(1).setLocation((int)monArray.get(1).getXpos(), (int)monArray.get(1).getYpos());
@@ -418,13 +411,13 @@ public class Game{
 		
 	}
 			
-	public void addMonster(Monster m){
+	public static void addMonster(Monster m){
 		
 		monArray.add(m);
 		
 	}
 	
-	public void addPlayer(Player p){
+	public static void addPlayer(Player p){
 		
 		JLabel lbl = new JLabel();
 		lbl.setLocation((int)p.getXpos(),(int)p.getYpos());
@@ -435,7 +428,7 @@ public class Game{
 	}
 			
 	
-	public JLabel makeMob(Mob m){//returns a label with the loc of the given mob and creates the tool tip
+	public static JLabel makeMob(Mob m){//returns a label with the loc of the given mob and creates the tool tip
 		
 		JLabel lbl = new JLabel(m.getName());
 		lbl.setToolTipText("hp: " + m.getHitpoints() + " atk: " + m.getAttack() + " str: " + m.getStrength() + " def: " + m.getDefense());
@@ -447,7 +440,7 @@ public class Game{
 		return lbl;
 	}
 	
-	public JFrame makeWindow(){
+	public static JFrame makeWindow(){
 		
 		JFrame window = new JFrame("2D RPG");
 		
@@ -462,7 +455,7 @@ public class Game{
 		
 	}
 	
-	public JProgressBar makeHpBar(Mob m){
+	public static JProgressBar makeHpBar(Mob m){
 		
 		JProgressBar prg = new JProgressBar(0,100);
 		prg.setVisible(true);

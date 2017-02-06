@@ -108,10 +108,10 @@ public class MenuBarListener extends Game implements ActionListener {
 		}
 		
 		else if(e.getSource() == Run.game.respawn){
-			Run.game.rocco.setHitpoints((byte) rocco.maxHitpoints);
-			Run.game.rocco.setXpos(150);
-			Run.game.rocco.setYpos(100);
-			Run.game.running = true;//doesnt work if the player is dead
+			rocco.setHitpoints((byte) rocco.maxHitpoints);
+			rocco.setXpos(150);
+			rocco.setYpos(100);
+			running = true;//doesnt work if the player is dead
 		}
 	}
 	

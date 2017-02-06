@@ -41,7 +41,7 @@ public class Game{
 	
 	JMenu game;
 	JMenuItem save;
-	JMenuItem load;
+	JMenuItem load;//probably wont use cuz cheating
 	JMenuItem respawn;
 	JMenuItem exit;
 	

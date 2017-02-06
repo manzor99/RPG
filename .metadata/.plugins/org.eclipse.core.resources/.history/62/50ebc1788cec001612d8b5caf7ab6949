@@ -41,7 +41,7 @@ public class Game{
 	
 	JMenu game;
 	JMenuItem save;
-	JMenuItem load;
+	JMenuItem load;//probably wont use cuz cheating
 	JMenuItem respawn;
 	JMenuItem exit;
 	
@@ -353,13 +353,34 @@ public class Game{
 			}
 		}
 		
-		rocco.setLastAttack(rocco.getLastAttack()+1);
-		
 	}
 	
-	public void monsterActions(){
-		
-		for (int i = 0; i < monArray.size(); i++) {
+	public void run(){
+	
+	if(firstTime){
+		this.setupFrame();
+		firstTime = false;
+	}
+	
+	
+		while(running) {
+			
+			this.moveAndAnimate();
+			
+			rocco.setLastAttack(rocco.getLastAttack()+1);
+			
+			for (int i = 0; i < monArray.size(); i++) {
+				
+			
+			//if(monArray.get(i).getYvel() < 0)
+			//	monsterLbl.get(i).setIcon(monArray.get(i).getImageDown());//*************************Demon Animation******************************
+			//else if(monArray.get(i).getYvel() > 0){}
+			//else if(monArray.get(i).getXvel() < 0){}
+			//else if(monArray.get(i).getXvel() > 0){}
+			//else {
+			//	monsterLbl.get(i).setIcon(new ImageIcon("src/sprites/DemonD1"));
+			//}
+			
 			
 			monsterLbl.get(i).setLocation((int)monArray.get(i).getXpos(), (int)monArray.get(i).getYpos());
 			playerLbl.get(0).setLocation((int)rocco.getXpos(),(int)rocco.getYpos());
@@ -386,24 +407,6 @@ public class Game{
 				running = false;
 			}
 			}//end for
-		
-	}
-	
-	public void run(){
-	
-	if(firstTime){
-		this.setupFrame();
-		firstTime = false;
-	}
-	
-	
-		while(running) {
-			
-			this.moveAndAnimate();
-			
-			
-			
-			this.monsterActions();
 			
 			playerLbl.get(0).setToolTipText("hp: " + rocco.getHitpoints() + " atk: " + rocco.getAttack() + " str: " + rocco.getStrength() + " def: " + rocco.getDefense());
 			monsterLbl.get(1).setLocation((int)monArray.get(1).getXpos(), (int)monArray.get(1).getYpos());

@@ -41,7 +41,7 @@ public class Game{
 	
 	JMenu game;
 	JMenuItem save;
-	JMenuItem load;
+	JMenuItem load;//probably wont use cuz cheating
 	JMenuItem respawn;
 	JMenuItem exit;
 	
@@ -353,13 +353,153 @@ public class Game{
 			}
 		}
 		
-		rocco.setLastAttack(rocco.getLastAttack()+1);
-		
 	}
 	
-	public void monsterActions(){
-		
-		for (int i = 0; i < monArray.size(); i++) {
+	public void run(){
+	
+	if(firstTime){
+		this.setupFrame();
+		firstTime = false;
+	}
+	
+	
+		while(running) {
+			
+			if(input != null){
+				if(input.right.isPressed()){
+					rocco.moveRight();
+					rocco.setDirection("right");
+					if(rocco.getAnimate()>3){
+						playerLbl.get(0).setIcon(rocco.getImageRight());
+						rocco.setAnimate(0);
+					}
+					else
+						rocco.setAnimate(rocco.getAnimate()+1);
+				}
+				else if(input.left.isPressed()){
+					rocco.moveLeft();
+					rocco.setDirection("left");
+					if(rocco.getAnimate()>3){
+						playerLbl.get(0).setIcon(rocco.getImageLeft());
+						rocco.setAnimate(0);
+					}
+					else
+						rocco.setAnimate(rocco.getAnimate()+1);
+				}
+				else if(input.down.isPressed()){
+					rocco.moveDown();
+					rocco.setDirection("down");
+				if(rocco.getAnimate()>3){
+					playerLbl.get(0).setIcon(rocco.getImageDown());
+					rocco.setAnimate(0);
+				}
+				else
+					rocco.setAnimate(rocco.getAnimate()+1);
+				}
+				else if(input.up.isPressed()){
+					rocco.moveUp();
+					rocco.setDirection("up");
+					if(rocco.getAnimate()>3){
+						playerLbl.get(0).setIcon(rocco.getImageUp());
+						rocco.setAnimate(0);
+					}
+					else
+						rocco.setAnimate(rocco.getAnimate()+1);
+				}
+				else if(input.E.isPressed() ){
+					
+					if(rocco.getAnimate()>3){
+						
+						if(rocco.getDirection() == "down"){
+							playerLbl.get(0).setIcon(rocco.getImageAttackD());
+							rocco.setAnimate(0);
+							}
+						else if(rocco.getDirection() == "up"){
+							playerLbl.get(0).setIcon(rocco.getImageAttackU());
+							rocco.setAnimate(0);
+						}
+						
+						else if(rocco.getDirection() == "right"){
+							playerLbl.get(0).setIcon(rocco.getImageAttackR());
+							rocco.setAnimate(0);
+						}
+						
+						else{
+							playerLbl.get(0).setIcon(rocco.getImageAttackL());
+							rocco.setAnimate(0);
+						}//default to left
+							
+					}
+					else
+						rocco.setAnimate(rocco.getAnimate()+1);
+					
+				for (int i = 0; i < monArray.size(); i++) {
+					
+				
+					if(rocco.canAttack(monArray.get(i))){//need loop
+						
+						
+						
+						monsterHpBars.get(i).setValue((int)(monArray.get(i).getHitpoints()*100/10));
+						monsterLbl.get(i).setToolTipText("hp: " + monArray.get(i).getHitpoints() + " atk: " + monArray.get(i).getAttack() + " str: " + monArray.get(i).getStrength() + " def: " + monArray.get(i).getDefense());
+						
+						//this if statement makes sure youre facing your target 
+						if(rocco.getDirection() == "right" && monArray.get(i).getXpos() >= rocco.getXpos()){
+							rocco.attack(monArray.get(i));
+							rocco.setLastAttack(0);
+						}
+						else if(rocco.getDirection() == "left" && monArray.get(i).getXpos()<= rocco.getXpos()){
+							rocco.attack(monArray.get(i));
+							rocco.setLastAttack(0);
+						}
+						else if(rocco.getDirection() == "up" && monArray.get(i).getYpos() <= rocco.getYpos()){
+							rocco.attack(monArray.get(i));
+							rocco.setLastAttack(0);
+						}
+						else if(rocco.getDirection() == "down" && monArray.get(i).getYpos() >= monArray.get(i).getYpos()){
+							rocco.attack(monArray.get(i));
+							rocco.setLastAttack(0);
+						}
+						
+						
+					}
+					}//end for
+				}
+				else{
+					
+					if(rocco.getDirection() == "up"){
+						playerLbl.get(0).setIcon(new ImageIcon("src/sprites/Up1.png"));
+					}
+					
+					else if(rocco.getDirection() == "down"){
+						playerLbl.get(0).setIcon(new ImageIcon("src/sprites/Down1.png"));
+					}
+					
+					else if(rocco.getDirection() == "left"){
+						playerLbl.get(0).setIcon(new ImageIcon("src/sprites/Left1.png"));
+					}
+					
+					else if(rocco.getDirection() == "right"){
+						playerLbl.get(0).setIcon(new ImageIcon("src/sprites/Right1.png"));
+					}
+					
+				}
+			}
+			
+			rocco.setLastAttack(rocco.getLastAttack()+1);
+			
+			for (int i = 0; i < monArray.size(); i++) {
+				
+			
+			//if(monArray.get(i).getYvel() < 0)
+			//	monsterLbl.get(i).setIcon(monArray.get(i).getImageDown());//*************************Demon Animation******************************
+			//else if(monArray.get(i).getYvel() > 0){}
+			//else if(monArray.get(i).getXvel() < 0){}
+			//else if(monArray.get(i).getXvel() > 0){}
+			//else {
+			//	monsterLbl.get(i).setIcon(new ImageIcon("src/sprites/DemonD1"));
+			//}
+			
 			
 			monsterLbl.get(i).setLocation((int)monArray.get(i).getXpos(), (int)monArray.get(i).getYpos());
 			playerLbl.get(0).setLocation((int)rocco.getXpos(),(int)rocco.getYpos());
@@ -386,24 +526,6 @@ public class Game{
 				running = false;
 			}
 			}//end for
-		
-	}
-	
-	public void run(){
-	
-	if(firstTime){
-		this.setupFrame();
-		firstTime = false;
-	}
-	
-	
-		while(running) {
-			
-			this.moveAndAnimate();
-			
-			
-			
-			this.monsterActions();
 			
 			playerLbl.get(0).setToolTipText("hp: " + rocco.getHitpoints() + " atk: " + rocco.getAttack() + " str: " + rocco.getStrength() + " def: " + rocco.getDefense());
 			monsterLbl.get(1).setLocation((int)monArray.get(1).getXpos(), (int)monArray.get(1).getYpos());
