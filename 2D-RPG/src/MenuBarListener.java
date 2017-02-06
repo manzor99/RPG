@@ -7,11 +7,10 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class MenuBarListener extends Game implements ActionListener {
-
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getSource() == save){
+		if(e.getSource() == Run.game.save){//make this work without the game being static
 			try{
 				
 			    PrintWriter writer = new PrintWriter("src/Player.txt");
@@ -41,7 +40,7 @@ public class MenuBarListener extends Game implements ActionListener {
 			}
 			
 		}
-		else if(e.getSource() == exit){
+		else if(e.getSource() == Run.game.exit){
 			
 				try{
 				
@@ -74,7 +73,7 @@ public class MenuBarListener extends Game implements ActionListener {
 				System.exit(0);
 				
 		}
-		else if (e.getSource() == load){
+		else if (e.getSource() == Run.game.load){
 			try {
 				Scanner input = new Scanner(new File("src/Player.txt"));
 				
@@ -104,11 +103,11 @@ public class MenuBarListener extends Game implements ActionListener {
 			System.out.println("Game Loaded Successfully!!");
 		}
 	
-		else if(e.getSource() == controls){
+		else if(e.getSource() == Run.game.controls){
 			System.out.println("controls");
 		}
 		
-		else if(e.getSource() == respawn){
+		else if(e.getSource() == Run.game.respawn){
 			rocco.setHitpoints((byte) rocco.maxHitpoints);
 			rocco.setXpos(150);
 			rocco.setYpos(100);
@@ -116,5 +115,6 @@ public class MenuBarListener extends Game implements ActionListener {
 		}
 	}
 	
+
 	
 }

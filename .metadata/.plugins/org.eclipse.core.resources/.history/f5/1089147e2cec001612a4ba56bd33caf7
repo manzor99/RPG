@@ -1,0 +1,23 @@
+
+public class Run {
+
+public static void main(String[] args) {
+		
+		Player rocco = new Player((byte) 1, "Rocco");
+		Monster jt = new Monster((byte)1, "jt");
+		Game game = new Game();
+		
+		while(1==1){
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	
+
+}

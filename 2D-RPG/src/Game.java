@@ -38,34 +38,73 @@ public class Game{
 	static byte floor = 0;//what floor are they on? 0=above ground floor 1-9 1 being dung 1 floor 1 9 being dung 3 floor 9
 	
 	//menu**
-	static JMenu game = new JMenu("Game");
-	static JMenuItem save = new JMenuItem("Save");
-	static JMenuItem load = new JMenuItem("Load");//probably wont use cuz cheating
-	static JMenuItem respawn = new JMenuItem("Respawn");
-	static JMenuItem exit = new JMenuItem("Exit");
 	
-	static JMenu dung1 = new JMenu("Dungeon 1");
-	static JMenu dung2 = new JMenu("Dungeon 2");
-	static JMenu dung3 = new JMenu("Dungeon 3");
+	JMenu game;
+	JMenuItem save;
+	JMenuItem load;//probably wont use cuz cheating
+	JMenuItem respawn;
+	JMenuItem exit;
 	
-	static JMenuItem controls = new JMenuItem("Controls");
+	JMenu dung1;
+	JMenu dung2;
+	JMenu dung3;
+	
+	JMenuItem controls;
+	
+	JMenuItem d1f1;//dung 1 floor 1
+	JMenuItem d1f2;
+	JMenuItem d1f3;
+	
+	JMenuItem d2f1;
+	JMenuItem d2f2;
+	JMenuItem d2f3;
+	
+	JMenuItem d3f1;
+	JMenuItem d3f2;
+	JMenuItem d3f3;
 	//end menu**
 	
-	public static void setup(){
+	public void setupMenu(){
+		
+		game = new JMenu("Game");
+		save = new JMenuItem("Save");
+		load = new JMenuItem("Load");//probably wont use cuz cheating
+		respawn = new JMenuItem("Respawn");
+		exit = new JMenuItem("Exit");
+		
+		dung1 = new JMenu("Dungeon 1");
+		dung2 = new JMenu("Dungeon 2");
+		dung3 = new JMenu("Dungeon 3");
+		
+		controls = new JMenuItem("Controls");
+		
+		d1f1 = new JMenuItem("Floor 1");//dung 1 floor 1
+		d1f2 = new JMenuItem("Floor 2");
+		d1f3 = new JMenuItem("Floor 3");
+		
+		d2f1 = new JMenuItem("Floor 1");
+		d2f2 = new JMenuItem("Floor 2");
+		d2f3 = new JMenuItem("Floor 3");
+		
+		d3f1 = new JMenuItem("Floor 1");
+		d3f2 = new JMenuItem("Floor 2");
+		d3f3 = new JMenuItem("Floor 3");
+		
+	}
+	
+	public Game(){
+		
+		//menu
+		this.setupMenu();
+		//menu
+		
+	}
+	
+	public void setup(){
 		//Menu bar
+		
 		MenuBarListener menuListener = new MenuBarListener();
 		
-		JMenuItem d1f1 = new JMenuItem("Floor 1");//dung 1 floor 1
-		JMenuItem d1f2 = new JMenuItem("Floor 2");
-		JMenuItem d1f3 = new JMenuItem("Floor 3");
-		
-		JMenuItem d2f1 = new JMenuItem("Floor 1");
-		JMenuItem d2f2 = new JMenuItem("Floor 2");
-		JMenuItem d2f3 = new JMenuItem("Floor 3");
-		
-		JMenuItem d3f1 = new JMenuItem("Floor 1");
-		JMenuItem d3f2 = new JMenuItem("Floor 2");
-		JMenuItem d3f3 = new JMenuItem("Floor 3");
 		
 		JMenuBar menuBar = new JMenuBar();
 			dung1.addActionListener(menuListener);
@@ -171,7 +210,7 @@ public class Game{
 			
 	}
 	
-public static void run(){
+	public void run(){
 	
 	if(firstTime){
 		setup();
@@ -354,24 +393,7 @@ public static void run(){
 		
 		
 	}
-	
-	
-	public static void main(String[] args) {
-		
-		Player rocco = new Player((byte) 1, "Rocco");
-		Monster jt = new Monster((byte)1, "jt");
-		
-		while(1==1){
-			run();
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
+			
 	public static void addMonster(Monster m){
 		
 		monArray.add(m);

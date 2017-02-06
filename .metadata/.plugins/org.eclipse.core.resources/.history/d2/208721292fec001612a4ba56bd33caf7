@@ -1,0 +1,120 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public class MenuBarListener extends Game implements ActionListener {
+	
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == Run.game.save){//make this work without the game being static 
+			try{
+				
+			    PrintWriter writer = new PrintWriter("src/Player.txt");
+			    writer.println(rocco.getId());
+			    writer.println(rocco.getName());
+			    writer.println(rocco.getHitpoints());
+			    writer.println(rocco.maxHitpoints);
+			    writer.println(rocco.getHitpointsXp());
+			    writer.println(rocco.getHpXpTillLv());
+			    writer.println(rocco.attack);
+			    writer.println(rocco.getAttackXp());
+			    writer.println(rocco.getAtkXpTillLv());
+			    writer.println(rocco.getStrength());
+			    writer.println(rocco.getStrengthXp());
+			    writer.println(rocco.getStrXpTillLv());
+			    writer.println(rocco.getDefense());
+			    writer.println(rocco.getDefenseXp());
+			    writer.println(rocco.getDefXpTillLv());
+			    writer.println((int)rocco.getXpos());
+			    writer.println((int)rocco.getYpos());
+
+			    writer.close();
+			    System.out.println("File saved!");
+			    
+			} catch (IOException e1) {
+			   System.out.println("Failed to save file.");
+			}
+			
+		}
+		else if(e.getSource() == exit){
+			
+				try{
+				
+					PrintWriter writer = new PrintWriter("src/Player.txt");
+					writer.println(rocco.getId());
+					writer.println(rocco.getName());
+					writer.println(rocco.getHitpoints());
+					writer.println(rocco.maxHitpoints);
+					writer.println(rocco.getHitpointsXp());
+					writer.println(rocco.getHpXpTillLv());
+					writer.println(rocco.attack);
+					writer.println(rocco.getAttackXp());
+					writer.println(rocco.getAtkXpTillLv());
+					writer.println(rocco.getStrength());
+					writer.println(rocco.getStrengthXp());
+					writer.println(rocco.getStrXpTillLv());
+					writer.println(rocco.getDefense());
+					writer.println(rocco.getDefenseXp());
+					writer.println(rocco.getDefXpTillLv());
+					writer.println((int)rocco.getXpos());
+					writer.println((int)rocco.getYpos());
+					
+					writer.close();
+					System.out.println("File saved!");
+			    
+			} catch (IOException e1) {
+			   System.out.println("Failed to save file.");
+			}
+			
+				System.exit(0);
+				
+		}
+		else if (e.getSource() == load){
+			try {
+				Scanner input = new Scanner(new File("src/Player.txt"));
+				
+				rocco.id = (byte)Integer.parseInt(input.next());//why can i access this?? its protected
+				rocco.name = input.next();
+				rocco.setHitpoints((byte)Integer.parseInt(input.next()));
+				rocco.maxHitpoints = (byte) Integer.parseInt(input.next());
+				rocco.setHitpointsXp(Integer.parseInt(input.next()));
+				rocco.setHpXpTillLv(Integer.parseInt(input.next()));
+				rocco.setAttack((byte) Integer.parseInt(input.next()));
+				rocco.setAttackXp(Integer.parseInt(input.next()));
+				rocco.setAtkXpTillLv(Integer.parseInt(input.next()));
+				rocco.setStrength((byte) Integer.parseInt(input.next()));
+				rocco.setStrengthXp(Integer.parseInt(input.next()));
+				rocco.setStrXpTillLv(Integer.parseInt(input.next()));
+				rocco.setDefense((byte) Integer.parseInt(input.next()));
+				rocco.setDefenseXp(Integer.parseInt(input.next()));
+				rocco.setDefXpTillLv(Integer.parseInt(input.next()));
+				rocco.setXpos(Integer.parseInt(input.next()));
+				rocco.setYpos(Integer.parseInt(input.next()));
+				
+				input.close();
+				
+			} catch (FileNotFoundException e1) {
+				System.out.println("Could not load game.");
+			}
+			System.out.println("Game Loaded Successfully!!");
+		}
+	
+		else if(e.getSource() == controls){
+			System.out.println("controls");
+		}
+		
+		else if(e.getSource() == respawn){
+			rocco.setHitpoints((byte) rocco.maxHitpoints);
+			rocco.setXpos(150);
+			rocco.setYpos(100);
+			running = true;//doesnt work if the player is dead
+		}
+	}
+	
+
+	
+}
